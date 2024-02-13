@@ -40,3 +40,6 @@ body {
   justify-content: space-between;
   padding: 1em;
 }
+.task-done {
+  text-decoration: line-through;
+}
