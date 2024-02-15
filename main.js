@@ -109,13 +109,12 @@ function filter(e) {
         filterlist.push(taskList[i]);
       }
     }
-    render();
   } else if (mode === "done") {
     for (let i = 0; i < taskList.length; i++) {
       if (taskList[i].isComplete === true) {
         filterlist.push(taskList[i]);
       }
     }
-    render();
   }
+  render();
 }
