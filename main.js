@@ -27,8 +27,9 @@ for (let i = 1; i < tabs.length; i++) {
     filter(event);
   });
 }
-console.log(tabs);
 function addTask() {
+  let taskValue = taskInput.value;
+  if (taskValue === "") return alert("할일을 입력해주세요");
   let task = {
     id: randomIDGenerate(),
     taskContent: taskInput.value,
@@ -71,15 +72,13 @@ function render() {
 }
 
 function toggleComplete(id) {
-  console.log("id:", id);
   for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].id == id) {
+    if (taskList[i].id === id) {
       taskList[i].isComplete = !taskList[i].isComplete;
       break;
     }
   }
-  render();
-  console.log(taskList);
+  filter();
 }
 function randomIDGenerate() {
   return "-" + Math.random().toString(36).substr(2, 9);
@@ -87,20 +86,24 @@ function randomIDGenerate() {
 
 function deleteTask(id) {
   for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].id == id) {
+    if (taskList[i].id === id) {
       taskList.splice(i, 1);
       break;
     }
   }
-  render();
+  filter();
 }
 
-function filter(event) {
+function filter(e) {
+  if (e) {
+    mode = e.target.id;
+    underLine.style.width = e.target.offsetWidth + "px";
+    underLine.style.left = e.target.offsetLeft + "px";
+    underLine.style.top =
+      e.target.offsetTop + (e.target.offsetHeight - 4) + "px";
+  }
   filterlist = [];
-  mode = event.target.id;
-  if (event.target.id === "all") {
-    render();
-  } else if (mode === "ongoing") {
+  if (mode === "ongoing") {
     for (let i = 0; i < taskList.length; i++) {
       if (taskList[i].isComplete === false) {
         filterlist.push(taskList[i]);
